@@ -10,8 +10,9 @@ class Detection:
         self.image_found = cv.matchTemplate(self.main_screen, self.image_to_search, cv.TM_CCORR_NORMED)
 
     def check_if_available(self):
-        #
+        # check if image match is above the threshold
         max_val = cv.minMaxLoc(self.image_found)[1]
+        # print(max_val)
         if max_val >= self.threshold:
             return True
         return False
