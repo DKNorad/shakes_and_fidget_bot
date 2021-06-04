@@ -192,3 +192,6 @@ class Action:
         x, y = det.get_item_center()
         self.click(x, y)
         self.enter(4)
+
+    def fortress(self):
+        pass
