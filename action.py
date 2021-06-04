@@ -4,13 +4,21 @@ import pywinauto
 from pywinauto.keyboard import send_keys
 from datetime import datetime
 import time
+import psutil
 
 
 class Action:
 
     def __init__(self):
-        self.app = pywinauto.application.Application(backend="uia").connect(title_re='.*Shakes & Fidget.*')
+        self.app = pywinauto.application.Application(backend="uia").connect(process=self.get_pid())
         self.wincap = WindowCapture(".*Shakes & Fidget.*")
+
+    @staticmethod
+    def get_pid():
+        for pid in psutil.pids():
+            p = psutil.Process(pid)
+            if p.name().find("shakesandfidget.exe") == 0:
+                return pid
 
     @staticmethod
     def get_time():
