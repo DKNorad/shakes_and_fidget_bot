@@ -16,7 +16,7 @@ class WindowCapture:
     offset_y = 0
     game_title = None
 
-    def __init__(self, rgx=r"Shakes & Fidget \(.*\)"):
+    def __init__(self, rgx=r".*Shakes & Fidget \(.*\)"):
         self.rgx = rgx
 
         # find the handle for the game we want to capture
