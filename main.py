@@ -7,6 +7,10 @@ import time
 wincap = WindowCapture()
 action = Action()
 
-# areas = ['abawuwu', 'arena', 'dungeons', 'guild', 'tavern', 'pets', 'underground]
-action.underground()
-
+# areas = ['abawuwu', 'arena', 'dungeons', 'guild', 'tavern', 'pets', 'underground', 'fortress']
+action.pets()
+action.tavern()
+# action.arena()
+# action.dungeons()
+# action.underground()
+# action.fortress()

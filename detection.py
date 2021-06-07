@@ -13,6 +13,7 @@ class Detection:
         # check if image match is above the threshold
         max_val = cv.minMaxLoc(self.image_found)[1]
         # print(max_val)
+        # print(self.threshold)
         if max_val >= self.threshold:
             return True
         return False

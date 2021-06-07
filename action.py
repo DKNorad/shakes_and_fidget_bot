@@ -1,5 +1,3 @@
-import random
-
 from windowcapture import WindowCapture
 from detection import Detection
 import pywinauto
@@ -24,7 +22,7 @@ class Action:
     @staticmethod
     def get_time():
         # return current date and time
-        return datetime.now().strftime("%y-%m-%d %H:%M:%S")
+        return datetime.now().strftime("%d-%m-%Y %H:%M:%S")
 
     @staticmethod
     def enter(n):
@@ -93,15 +91,14 @@ class Action:
             det = self.screenshot_and_match(r'arena\arena_boxes')
 
         # attack a random player
-        x, y = random.choice(opponents)
+        x, y = choice(opponents)
         self.click(x, y)
         self.enter(3)
         print(f'{self.get_time()}: A player has been attacked in the Arena.')
 
-    # TODO fix pets being attacked while on a cooldown
     def pets(self):
         # check if pets are available
-        det = self.screenshot_and_match(r'pets\pets_cooldown', 0.92)
+        det = self.screenshot_and_match(r'pets\pets_cooldown', 0.94)
         if det.check_if_available():
             return print(f'{self.get_time()}: Pets are under cooldown at the moment.')
 
@@ -119,11 +116,11 @@ class Action:
         pets = ['pet_shadow', 'pet_light', 'pet_earth', 'pet_fire', 'pet_water']
         count = 0
         for pet in pets:
-            det = self.screenshot_and_match(r'pets\pets_cooldown', 0.89)
+            det = self.screenshot_and_match(r'pets\pets_cooldown', 0.94)
             if det.check_if_available():
                 return print(f'{self.get_time()}: Pets are under cooldown at the moment.')
 
-            det = Detection('images/main_screen.jpg', f'images/pets/{pet}.jpg')
+            det = Detection('images/main_screen.jpg', f'images/pets/{pet}.jpg', 0.95)
             if not det.check_if_available():
                 count += 1
                 if count == 5:
@@ -156,6 +153,7 @@ class Action:
         self.enter(2)
         print(f'{self.get_time()}: Mission started.')
 
+    # TODO implement a way to choose a specific location in the Dungeon to be entered
     def dungeons(self):
         dungeons = {'The Twister': (370, 180), 'Hemorridor': (600, 200), 'Mount Olympus': (815, 115),
                     'Nordic Gods': (1100, 105), 'Continues Loop of Idols': (715, 280), 'The Tower': (370, 180),
@@ -187,25 +185,34 @@ class Action:
         self.enter(3)
 
     def underground(self):
-        # create a new screenshot to see if we opened the correct tab
-        det = self.screenshot_and_match(r'underground\lure_hero', 0.9)
-        det2 = self.screenshot_and_match(r'underground\lure_hero_done', 0.9)
+        # create a screenshot until we have the correct tab opened
+        det = self.screenshot_and_match(r'underground\lure_hero', 0.95)
+        det2 = self.screenshot_and_match(r'underground\lure_hero_done', 0.95)
         while not (det2.check_if_available() or det.check_if_available()):
             self.click(140, 450)
-            det = self.screenshot_and_match(r'underground\lure_hero', 0.83)
-            det2 = self.screenshot_and_match(r'underground\lure_hero_done', 0.83)
+            det = self.screenshot_and_match(r'underground\lure_hero', 0.88)
+            det2 = self.screenshot_and_match(r'underground\lure_hero_done', 0.88)
 
         # collect souls
         det = self.screenshot_and_match(r'underground\soul_harvest')
         x, y = det.get_item_center()
         self.click(x, y)
+
+        # confirm that the Soul Extractor is not under construction
+        det = self.screenshot_and_match(r'underground\cancel_construction')
+        if det.check_if_available():
+            x, y = det.get_item_center()
+            self.click(x, y)
+            print(f'{self.get_time()}: The Soul Extractor is under construction.')
+
+        # confirm that the storage is not full
         det = self.screenshot_and_match(r'underground\close')
         if det.check_if_available():
             x, y = det.get_item_center()
             self.click(x, y)
-            print(f'{self.get_time()}: Underground souls collected.')
+            print(f'{self.get_time()}: The Soul storage is full.')
         else:
-            print(f'{self.get_time()}: Soul Extractor already collected or storage is full.')
+            print(f'{self.get_time()}: Underground souls collected.')
 
         # collect gold # TODO grab a relevant screenshot to match the gold mine
         # det = self.screenshot_and_match(r'underground\soul_harvest')
@@ -227,20 +234,46 @@ class Action:
                 break
             x, y = det.get_item_center()
             self.click(x, y)
-            self.enter(4)
+            self.enter(2)
             print(f'{self.get_time()}: A hero has been lured in the underground.')
 
-        # Use adventure points in the Adventuromatic
-        det = self.screenshot_and_match(r'underground\adventurematic', 0.98)
-        while True:
-            if not det.check_if_available():
-                x, y = det.get_item_center()
-                self.click(x, y)
-                self.enter(3)
-                print(f'{self.get_time()}: Underground adventure points used.')
-            else:
-                print(f'{self.get_time()}: All Adventuromatic points have been used.')
-                break
-
     def fortress(self):
-        pass
+        # create a screenshot until we have the correct tab opened
+        det = self.screenshot_and_match(r'fortress\attack', 0.95)
+        while not det.check_if_available():
+            self.click(140, 450)
+            det = self.screenshot_and_match(r'fortress\attack', 0.95)
+
+        # confirm that the Academy is not under construction and collect experience
+        self.click(450, 200)
+        det = self.screenshot_and_match(r'fortress\cancel_construction')
+        if det.check_if_available():
+            x, y = det.get_item_center()
+            self.click(x, y)
+            print(f'{self.get_time()}: The Academy is under construction.')
+        else:
+            print(f'{self.get_time()}: Experience from the Academy has been collected.')
+
+        # confirm that the Quarry is not under construction and collect the stone
+        self.click(450, 520)
+        det = self.screenshot_and_match(r'fortress\cancel_construction')
+        if det.check_if_available():
+            x, y = det.get_item_center()
+            self.click(x, y)
+            print(f'{self.get_time()}: The Quarry is under construction.')
+        else:
+            print(f'{self.get_time()}: Stone from the Quarry has been collected.')
+
+        # confirm that the Woodcutter's Hut is not under construction and collect the wood
+        self.click(600, 600)
+        det = self.screenshot_and_match(r'fortress\cancel_construction')
+        if det.check_if_available():
+            x, y = det.get_item_center()
+            self.click(x, y)
+            print(f'{self.get_time()}: The Woodcutter\'s Hut is under construction.')
+        else:
+            print(f'{self.get_time()}: Wood from the Woodcutter\'s Hut has been collected.')
+
+
+
+
