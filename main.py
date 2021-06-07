@@ -8,9 +8,11 @@ wincap = WindowCapture()
 action = Action()
 
 # areas = ['abawuwu', 'arena', 'dungeons', 'guild', 'tavern', 'pets', 'underground', 'fortress']
-action.pets()
+action.arena()
 action.tavern()
-# action.arena()
-# action.dungeons()
-# action.underground()
-# action.fortress()
+action.pets()
+action.dungeons()
+action.underground()
+action.fortress()
+action.abawuwu()
+

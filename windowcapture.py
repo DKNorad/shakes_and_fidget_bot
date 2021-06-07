@@ -16,7 +16,7 @@ class WindowCapture:
     offset_y = 0
     game_title = None
 
-    def __init__(self, rgx=".*Shakes & Fidget.*"):
+    def __init__(self, rgx=r"Shakes & Fidget \(.*\)"):
         self.rgx = rgx
 
         # find the handle for the game we want to capture
@@ -82,6 +82,7 @@ class WindowCapture:
         signed_array = data_bitmap.GetBitmapBits(True)
         img = np.frombuffer(signed_array, dtype='uint8')
         img.shape = (self.h, self.w, 4)
+        cv.imwrite('images/main_screen.jpg', img)
 
         # free Resources
         win32gui.DeleteObject(data_bitmap.GetHandle())
@@ -89,4 +90,3 @@ class WindowCapture:
         dc_obj.DeleteDC()
         win32gui.ReleaseDC(self.hwnd, win_dc)
 
-        cv.imwrite('images/main_screen.jpg', img)
