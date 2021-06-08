@@ -36,7 +36,7 @@ After that you can just run the script. It will automatically focus on the game.
 
 
 ### --Resources used--
-[Learn Code By Gaming](https://www.youtube.com/channel/UCD8vb6Bi7_K_78nItq5YITA)
+[Learn Code By Gaming](https://www.youtube.com/channel/UCD8vb6Bi7_K_78nItq5YITA)  
 Libraries used:
 - time
 - pywinauto
