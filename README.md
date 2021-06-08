@@ -25,9 +25,9 @@ A bot that automaticaly performs most of the repeatable tasks in the game.
 - Always check if the activity is available to avoid spending "Mushrooms" which is the in game paid currency.
 
 ### --Setup--
-Since the script is using image recognition for most of the tasks in only works correctly when the game window is 1280x720 in windowed mode. You can force the game to run with specific resolution by adding the following launch options in Steam:  
+Since the script is using image recognition for most of the tasks it only works correctly when the game window is 1280x720 in windowed mode. You can force the game to run with specific resolution by adding the following launch options in Steam:  
 **-screen-width 1280 -screen-height 720**  
-After that you can just run the script. It will automatically focus on the game. Note that the script cannot run in the background and it requires the game window ot be on top.
+After that you can just run the script. It will automatically focus on the game. Note that the script cannot run in the background and it requires the game window to be on top.
 
 ### --Future plans--  
 - [ ] Configure a GUI to choose which actions to be run.
