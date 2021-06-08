@@ -38,6 +38,7 @@ class Action:
 
     def screenshot_and_match(self, image, threshold=0.85):
         # create screenshot and match(detect) image in entire window
+        time.sleep(0.5)
         self.wincap.get_screenshot()
         return Detection(r'images\main_screen.jpg', fr'images\{image}.jpg', threshold)
 
@@ -103,7 +104,7 @@ class Action:
             return print(f'{self.get_time()}: Pets are under cooldown at the moment.')
 
         # get center coordinates and click
-        main_x, main_y = det.get_item_center()
+        main_x, main_y = 150, 365
         self.click(main_x, main_y)
 
         # create a new screenshot to see if we opened the correct tab
@@ -112,25 +113,29 @@ class Action:
             self.click(main_x, main_y)
             det = self.screenshot_and_match(r'pets\check_if_pet_screen')
 
-        # iterate over all 5 pets
-        pets = ['pet_shadow', 'pet_light', 'pet_earth', 'pet_fire', 'pet_water']
-        count = 0
-        for pet in pets:
-            det = self.screenshot_and_match(r'pets\pets_cooldown', 0.94)
-            if det.check_if_available():
-                return print(f'{self.get_time()}: Pets are under cooldown at the moment.')
+        det = self.screenshot_and_match(r'pets\pets_done')
+        if det.check_if_available():
+            return print(f'{self.get_time()}: All pets have been attacked.')
+        else:
+            # iterate over all 5 pets
+            pets = ['pet_shadow', 'pet_light', 'pet_earth', 'pet_fire', 'pet_water']
+            count = 0
+            for pet in pets:
+                det = self.screenshot_and_match(r'pets\pets_cooldown', 0.94)
+                if det.check_if_available():
+                    return print(f'{self.get_time()}: Pets are under cooldown at the moment.')
 
-            det = Detection('images/main_screen.jpg', f'images/pets/{pet}.jpg', 0.95)
-            if not det.check_if_available():
-                count += 1
-                if count == 5:
-                    return print(f'{self.get_time()}: All pets have been attacked.')
-                continue
-            x, y = det.get_item_center()
-            self.click(x, y)
-            self.enter(3)
-            print(f'{self.get_time()}: A pet has been attacked.')
-            break
+                det = Detection('images/main_screen.jpg', f'images/pets/{pet}.jpg', 0.95)
+                if not det.check_if_available():
+                    count += 1
+                    if count == 5:
+                        return print(f'{self.get_time()}: All pets have been attacked.')
+                    continue
+                x, y = det.get_item_center()
+                self.click(x, y)
+                self.enter(3)
+                print(f'{self.get_time()}: A pet has been attacked.')
+                break
 
     # TODO implement image to text processing to choose quest based on gold, exp or duration
     def tavern(self):
@@ -150,8 +155,13 @@ class Action:
             det = self.screenshot_and_match(r'tavern\tavern_guard')
 
         # start the first quest
-        self.enter(2)
-        print(f'{self.get_time()}: Mission started.')
+        self.enter(1)
+        det = self.screenshot_and_match(r'tavern\drink_beer')
+        if det.check_if_available():
+            print(f'{self.get_time()}: No more adventure points in the tevern.')
+        else:
+            self.enter(1)
+            print(f'{self.get_time()}: Mission started.')
 
     # TODO implement a way to choose a specific location in the Dungeon to be entered
     def dungeons(self):
@@ -239,10 +249,10 @@ class Action:
 
     def fortress(self):
         # create a screenshot until we have the correct tab opened
-        det = self.screenshot_and_match(r'fortress\attack', 0.95)
+        det = self.screenshot_and_match(r'fortress\attack', 0.94)
         while not det.check_if_available():
             self.click(140, 450)
-            det = self.screenshot_and_match(r'fortress\attack', 0.95)
+            det = self.screenshot_and_match(r'fortress\attack', 0.94)
 
         # confirm that the Academy is not under construction and collect experience
         self.click(450, 200)
@@ -254,26 +264,32 @@ class Action:
         else:
             print(f'{self.get_time()}: Experience from the Academy has been collected.')
 
-        # confirm that the Quarry is not under construction and collect the stone
+        # confirm that the Quarry is not under construction, storage is not full and collect the stone
         self.click(450, 520)
         det = self.screenshot_and_match(r'fortress\cancel_construction')
+        det2 = self.screenshot_and_match(r'fortress\close')
         if det.check_if_available():
             x, y = det.get_item_center()
             self.click(x, y)
             print(f'{self.get_time()}: The Quarry is under construction.')
+        elif det2.check_if_available():
+            x, y = det.get_item_center()
+            self.click(x, y)
+            print(f'{self.get_time()}: The Stone storage is full.')
         else:
             print(f'{self.get_time()}: Stone from the Quarry has been collected.')
 
         # confirm that the Woodcutter's Hut is not under construction and collect the wood
         self.click(600, 600)
         det = self.screenshot_and_match(r'fortress\cancel_construction')
+        det2 = self.screenshot_and_match(r'fortress\close')
         if det.check_if_available():
             x, y = det.get_item_center()
             self.click(x, y)
             print(f'{self.get_time()}: The Woodcutter\'s Hut is under construction.')
+        elif det2.check_if_available():
+            x, y = det.get_item_center()
+            self.click(x, y)
+            print(f'{self.get_time()}: The Wood storage is full.')
         else:
             print(f'{self.get_time()}: Wood from the Woodcutter\'s Hut has been collected.')
-
-
-
-

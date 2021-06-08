@@ -7,13 +7,18 @@ wincap = WindowCapture()
 action = Action()
 
 # areas = ['abawuwu', 'arena', 'dungeons', 'guild', 'tavern', 'pets', 'underground', 'fortress']
+count = 0
 while True:
-    action.arena()
     action.tavern()
-    action.pets()
-    action.dungeons()
-    action.underground()
-    action.fortress()
-    action.abawuwu()
-
+    action.arena()
+    if count % 2 == 0:
+        action.pets()
+    if count % 6 == 0:
+        action.dungeons()
+        action.underground()
+        action.fortress()
+        action.abawuwu()
+    count += 1
+    print(f"{action.get_time()}: Waiting for 10 minutes.")
     time.sleep(600)
+
