@@ -13,6 +13,7 @@ while True:
     action.arena()
     if count % 2 == 0:
         action.pets()
+
     if count % 6 == 0:
         action.dungeons()
         action.underground()
@@ -21,4 +22,3 @@ while True:
     count += 1
     print(f"{action.get_time()}: Waiting for 10 minutes.")
     time.sleep(600)
-
