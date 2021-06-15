@@ -111,7 +111,7 @@ class Action:
             self.click(main_x, main_y)
             det = self.screenshot_and_match(r'pets\check_if_pet_screen')
 
-        det = self.screenshot_and_match(r'pets\pets_done', 0.95)
+        det = self.screenshot_and_match(r'pets\pets_done', 0.97)
         if det.check_if_available():
             return print(f'{self.get_time()}: All pets have been attacked.')
         else:
@@ -207,11 +207,11 @@ class Action:
         det_cancel = self.screenshot_and_match(r'underground\cancel_construction')
         det_close = self.screenshot_and_match(r'underground\close')
         if det_cancel.check_if_available():  # confirm that the Soul Extractor is not under construction
-            x, y = det.get_item_center()
+            x, y = det_cancel.get_item_center()
             self.click(x, y)
             print(f'{self.get_time()}: The Soul Extractor is under construction.')
         elif det_close.check_if_available():  # confirm that the storage is not full
-            x, y = det.get_item_center()
+            x, y = det_close.get_item_center()
             self.click(x, y)
             print(f'{self.get_time()}: The Soul storage is full.')
         else:
@@ -223,24 +223,25 @@ class Action:
         det_cancel = self.screenshot_and_match(r'underground\cancel_construction')
         det_close = self.screenshot_and_match(r'underground\close')
         if det_cancel.check_if_available():  # confirm that the Gold Pit is not under construction
-            x, y = det.get_item_center()
+            x, y = det_cancel.get_item_center()
             self.click(x, y)
             print(f'{self.get_time()}: The Gold Pit is under construction.')
         elif det_close.check_if_available():  # confirm that the gold hasn't been collected already
-            x, y = det.get_item_center()
+            x, y = det_close.get_item_center()
             self.click(x, y)
             print(f'{self.get_time()}: The gold has already been collected.')
         else:
             print(f'{self.get_time()}: Underground gold collected.')
 
         # lure heroes underground
-        det = self.screenshot_and_match(r'underground\lure_hero', 0.95)
+        det_lure = self.screenshot_and_match(r'underground\lure_hero', 0.95)
+        x, y = det_lure.get_item_center()
+        self.click(x, y)
+        det_attack = self.screenshot_and_match(r'underground\attack_hero', 0.95)
         while True:
-            if not det.check_if_available():
+            if not det_attack.check_if_available():
                 print(f'{self.get_time()}: Maximum heroes lured for the day.')
                 break
-            x, y = det.get_item_center()
-            self.click(x, y)
             self.enter(3)
             print(f'{self.get_time()}: A hero has been lured in the underground.')
 
@@ -267,11 +268,11 @@ class Action:
         det_cancel = self.screenshot_and_match(r'fortress\cancel_construction')
         det_close = self.screenshot_and_match(r'fortress\close', 0.95)
         if det_cancel.check_if_available():  # confirm that the Quarry is not under construction
-            x, y = det.get_item_center()
+            x, y = det_cancel.get_item_center()
             self.click(x, y)
             print(f'{self.get_time()}: The Quarry is under construction.')
         elif det_close.check_if_available():  # confirm that the stone storage is not full
-            x, y = det.get_item_center()
+            x, y = det_close.get_item_center()
             self.click(x, y)
             print(f'{self.get_time()}: The Stone storage is full.')
         else:
@@ -282,11 +283,11 @@ class Action:
         det_cancel = self.screenshot_and_match(r'fortress\cancel_construction')
         det_close = self.screenshot_and_match(r'fortress\close', 0.95)
         if det_cancel.check_if_available():  # confirm that the Woodcutter's Hut is not under construction
-            x, y = det.get_item_center()
+            x, y = det_cancel.get_item_center()
             self.click(x, y)
             print(f'{self.get_time()}: The Woodcutter\'s Hut is under construction.')
         elif det_close.check_if_available():  # confirm that the wood storage is not full
-            x, y = det.get_item_center()
+            x, y = det_close.get_item_center()
             self.click(x, y)
             print(f'{self.get_time()}: The Wood storage is full.')
         else:

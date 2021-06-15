@@ -33,17 +33,6 @@ After that you can just run the script. It will automatically focus on the game.
 - [ ] Configure a GUI to choose which actions to be run.
 - [ ] Implement a way to choose a specific location in the Dungeon to be entered.
 - [ ] Implement image to text processing to choose a mission based on gold, exp or duration.
-  
-### Libraries used:
-- time
-- datetime
-- pywinauto
-- random
-- cv2
-- re
-- numpy
-- ctypes
-- win32gui, win32ui, win32con, win32process  
 
 ### Resources used
 [Learn Code By Gaming](https://www.youtube.com/channel/UCD8vb6Bi7_K_78nItq5YITA)  
