@@ -23,11 +23,18 @@ A bot that automatically performs most of the repeatable tasks in the game.
 ### Functionality
 - Show a message with a date stamp for every action performed or every error returned.
 - Always check if the activity is available to avoid spending "Mushrooms" which is the in game paid currency.
+- The script is unable to run in the background as it requires the game window to be on focus.
 
 ### Setup
-Since the script is using image recognition for most of the tasks it only works correctly when the game window is 1280x720 in windowed mode. You can force the game to run with specific resolution by adding the following launch options in Steam:  
+**Resolution:**  
+Since the script is using image recognition for most of the tasks it only works correctly when the game window is
+1280x720 in windowed mode. You can force the game to run with specific resolution by adding the 
+following launch options in Steam:  
 **-screen-width 1280 -screen-height 720**  
-After that you can just run the script. It will automatically focus on the game. Note that the script cannot run in the background, and it requires the game window to be on top.
+
+**Game Settings:**  
+You need to have the in game timers turned on for hte script to operate correctly. You can do that in the 
+"Gameplay" section in the game settings by ticking the "Always show timer" option.
 
 ### Future plans:
 - [ ] Configure a GUI to choose which actions to be run.
