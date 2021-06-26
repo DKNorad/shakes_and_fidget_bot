@@ -1,8 +1,8 @@
-import win32gui, win32ui, win32con, win32process
-import re
-import numpy as np
 from ctypes import windll
 import cv2 as cv
+import numpy as np
+import re
+import win32gui, win32ui, win32con, win32process
 
 
 class WindowCapture:

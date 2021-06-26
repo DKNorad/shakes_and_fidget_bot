@@ -1,9 +1,9 @@
 # Shakes & Fidget Bot
 
-### Description
+### Description:
 A bot that automatically performs most of the repeatable tasks in the game.
 
-### Locations
+### Locations/Tasks:
 - **Tavern:** Start a random mission.
 - **Arena:** Attack a random player.
 - **Pets:** Attack all pets in order from "Shadow" to "Water".
@@ -20,12 +20,19 @@ A bot that automatically performs most of the repeatable tasks in the game.
   - Collect the daily bonus.
   - Spin the wheel.
   
-### Functionality
+### Functionality:
 - Show a message with a date stamp for every action performed or every error returned.
 - Always check if the activity is available to avoid spending "Mushrooms" which is the in game paid currency.
 - The script is unable to run in the background as it requires the game window to be on focus.
 
-### Setup
+### Prerequisites:  
+- numpy
+- opencv-python
+- pywinauto
+- pywin32
+
+
+### Setup:
 **Resolution:**  
 Since the script is using image recognition for most of the tasks it only works correctly when the game window is
 1280x720 in windowed mode. You can force the game to run with specific resolution by adding the 
@@ -41,5 +48,5 @@ You need to have the in game timers turned on for hte script to operate correctl
 - [ ] Implement a way to choose a specific location in the Dungeon to be entered.
 - [ ] Implement image to text processing to choose a mission based on gold, exp or duration.
 
-### Resources used
+### Resources used:
 [Learn Code By Gaming](https://www.youtube.com/channel/UCD8vb6Bi7_K_78nItq5YITA)  

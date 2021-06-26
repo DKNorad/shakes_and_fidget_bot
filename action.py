@@ -1,10 +1,10 @@
-from windowcapture import WindowCapture
+from datetime import datetime
 from detection import Detection
 import pywinauto
 from pywinauto.keyboard import send_keys
-from datetime import datetime
 from random import choice
 import time
+from windowcapture import WindowCapture
 
 
 class Action:
