@@ -1,5 +1,7 @@
 # Shakes & Fidget Bot
 
+DEPRECATED. Currently working on migrating the script to Selenium in order to work with the browser version on the background.
+
 ### Description:
 A bot that automatically performs most of the repeatable tasks in the game.
 
